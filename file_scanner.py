@@ -25,12 +25,12 @@ class file_scanner:
         return java_files
 
     def load(self):
-        source_files_objs = []
+        source_files_strings = []
         for file in self.files:
-            source_files_objs.append(self.parse_file(file))
-        return source_files_objs
+            source_files_strings.append(self.load_file(file))
+        return source_files_strings
 
-    def parse_file(self, file_path):
+    def load_file(self, file_path):
         file_name = os.path.basename(file_path)
         file_title, file_type = file_name.split('.')
         lines = self.extract_lines(file_path)
@@ -38,8 +38,7 @@ class file_scanner:
         return source_file_obj
 
     def extract_lines(self, file_path):
-        lines = {}
+        lines = ""
         with open(file_path, 'r') as file:
-            for i, line in enumerate(file, start=1):
-                lines[f"Line #{i}"] = line.strip()
+            lines = file.readlines()
         return lines

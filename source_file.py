@@ -8,6 +8,8 @@ class source_file:
         output = f"File: {self.file_title}\n"
         output += f"Lang: {self.file_type}\n"
         output += "Lines:\n"
-        for line_number, line_content in self.lines.items():
-            output += f"  {line_number}: {line_content}\n"
+        i = 1
+        for line_content in self.lines:
+            output += f"  Line #: {i}: {line_content}"
+            i += 1
         return output
