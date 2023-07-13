@@ -8,12 +8,12 @@ Test on Hadoop repo
 3. partition like the following:
 --JavaCC
 --pip install ply
---YACC parser for C/Java grammer
---grammers-v4
+--YACC parser for C/Java grammar
+--grammars-v4
 
 look up visitor in design patterns
 Use a different parser that uses visitor
 
 ANTL4R
 
-Java Parser - need to consider grammer
+Java Parser - need to consider grammar

@@ -21,7 +21,7 @@ if __name__ == "__main__":
 		print(str(file))
 		"""
 		partitioner = file_partitioner(file)
-		file_partitions = partitioner.partition()
+		file_partitions = partitioner.parse()
 		file.save_partitions(file_partitions)
 		"""
 
