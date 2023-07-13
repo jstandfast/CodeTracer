@@ -1,6 +1,6 @@
 import sys
-import file_scanner
-import source_file
+from file_scanner import FileScanner
+from source_file import *
 import java_parser_listener
 # import file_partitioner
 # import file_partition
@@ -14,10 +14,10 @@ if __name__ == "__main__":
 	  print('No project path provided.\nRun again with path as argument.')
 	  exit()
 
-	scanner = file_scanner.file_scanner(target_path)
-	files_to_partition = scanner.full_scan()
+	scanner = FileScanner(target_path)
+	scanner.scan()
 
-	for file in files_to_partition:
+	for file in scanner.files:
 		print(str(file))
 		"""
 		partitioner = file_partitioner(file)
