@@ -46,12 +46,3 @@ class JavaParameter(SourceParameter):
 
 	def __str__(self):
 		return f'JavaParameter: {self.name}\nType: {self.param_type}'
-
-class JavaFile(SourceFile):
-	def __init__(self, name, classes):
-		super().__init__(name)
-		self.classes = classes  # List of JavaClass objects
-
-	def __str__(self):
-		classes_str = "\n".join(str(c) for c in self.classes)
-		return f'JavaFile: {self.name}\nClasses:\n{classes_str}'

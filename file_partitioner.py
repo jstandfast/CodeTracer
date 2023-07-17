@@ -11,8 +11,9 @@ class FilePartitioner:
 		self.file_type = self.file_name.rsplit('.')[-1] if self.file_name is not None else None
 
 	def parse(self):
-		if self.file_type == constants.JAVA:
-			self.parse_java_file()
+	    if self.file_type == constants.JAVA:
+	        return self.parse_java_file()
+
 
 	def parse_java_file(self):
 		input_stream = FileStream(self.file_path)
