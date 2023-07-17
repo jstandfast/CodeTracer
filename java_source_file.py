@@ -1,9 +1,9 @@
 from source_file import SourceFile, SourceClass, SourceMethod, SourceField, SourceParameter
 
 class JavaFile(SourceFile):
-    def __init__(self, name, classes):
-        super().__init__(name)
-        self.classes = classes  # List of JavaClass objects
+	def __init__(self, name, classes):
+		super().__init__(name)
+		self.classes = classes  # List of JavaClass objects
 
 	def __str__(self):
 		classes_str = "\n".join(str(c) for c in self.classes)

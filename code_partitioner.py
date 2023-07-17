@@ -1,9 +1,8 @@
 import sys
 from file_scanner import FileScanner
 from source_file import *
+from file_partitioner import FilePartitioner
 import java_parser_listener
-# import file_partitioner
-# import file_partition
 
 if __name__ == "__main__":
 
@@ -18,12 +17,10 @@ if __name__ == "__main__":
 	scanner.scan()
 
 	for file in scanner.files:
-		print(str(file))
-		"""
-		partitioner = file_partitioner(file)
-		file_partitions = partitioner.parse()
-		file.save_partitions(file_partitions)
-		"""
+		# print(str(file))
+		fp = FilePartitioner(file)
+		java_file_x = fp.parse()
+		print(str(java_file_x))
 
 	# TODO: Change path to output
 	# for seg in segments:

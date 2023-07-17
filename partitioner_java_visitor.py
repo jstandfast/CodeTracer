@@ -1,28 +1,38 @@
 from antlr4 import *
 from JavaParser import JavaParser
 from JavaVisitor import JavaVisitor
-
 from java_source_file import *
 
 class PartitionerJavaVisitor(JavaVisitor):
+    def __init__(self, file_name):
+        self.file_name = file_name
+
     def visitCompilationUnit(self, ctx:JavaParser.CompilationUnitContext):
-        classes = self.visit(ctx.typeDeclaration())
-        return JavaFile(ctx.fileName, classes)
-    
-    def visitTypeDeclaration(self, ctx:JavaParser.TypeDeclarationContext):
-        methods = self.visit(ctx.methodDeclaration())
-        fields = self.visit(ctx.fieldDeclaration())
+        # Each type declaration is either a class or an interface
+        classes = [self.visit(classCtx) for classCtx in ctx.typeDeclaration() if classCtx.classDeclaration() is not None]
+        return JavaFile(self.file_name, classes)
+
+    def visitClassDeclaration(self, ctx:JavaParser.ClassDeclarationContext):
+        method_contexts = [classBodyDecl.memberDeclaration().methodDeclaration() for classBodyDecl in ctx.classBody().classBodyDeclaration() if classBodyDecl.memberDeclaration() is not None and classBodyDecl.memberDeclaration().methodDeclaration() is not None]
+        methods = [self.visit(methodCtx) for methodCtx in method_contexts]
+        field_contexts = [classBodyDecl.memberDeclaration().fieldDeclaration() for classBodyDecl in ctx.classBody().classBodyDeclaration() if classBodyDecl.memberDeclaration() is not None and classBodyDecl.memberDeclaration().fieldDeclaration() is not None]
+        fields = [self.visit(fieldCtx) for fieldCtx in field_contexts]
         return JavaClass(ctx.Identifier().getText(), methods, fields)
 
     def visitMethodDeclaration(self, ctx:JavaParser.MethodDeclarationContext):
-        parameters = self.visit(ctx.formalParameters())
-        return JavaMethod(ctx.Identifier().getText(), ctx.typeType().getText(), parameters, ctx.methodBody().getText())
+        parameter_list_context = ctx.formalParameters().formalParameterList()
+        if parameter_list_context is not None:
+            parameters = [self.visit(paramCtx) for paramCtx in parameter_list_context.formalParameter()]
+        else:
+            parameters = []
+        
+        # Check for None before calling getText()
+        type_spec = ctx.typeSpec().getText() if ctx.typeSpec() else "void"
+        
+        return JavaMethod(ctx.Identifier().getText(), type_spec, parameters, ctx.methodBody().getText())
 
     def visitFieldDeclaration(self, ctx:JavaParser.FieldDeclarationContext):
-        return JavaField(ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().getText(), ctx.typeType().getText())
+        return JavaField(ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().getText(), ctx.typeSpec().getText())
 
-    def visitFormalParameters(self, ctx:JavaParser.FormalParametersContext):
-        parameters = []
-        for paramCtx in ctx.formalParameterList().formalParameter():
-            parameters.append(JavaParameter(paramCtx.variableDeclaratorId().getText(), paramCtx.typeType().getText()))
-        return parameters
+    def visitFormalParameter(self, ctx:JavaParser.FormalParameterContext):
+        return JavaParameter(ctx.variableDeclaratorId().getText(), ctx.typeSpec().getText())
