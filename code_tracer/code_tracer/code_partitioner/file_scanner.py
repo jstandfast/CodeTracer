@@ -1,6 +1,7 @@
 import os
 import re
 import source_file
+import constants
 
 class FileScanner:
     def __init__(self, path):
@@ -15,6 +16,6 @@ class FileScanner:
         java_files = []
         for root, dirs, files in os.walk(self.path):
             for file in files:
-                if file.endswith('.java'):
+                if file.endswith(constants.JAVA):
                     java_files.append(os.path.join(root, file))
         return java_files
