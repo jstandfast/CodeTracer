@@ -1,8 +1,6 @@
 
 output.txt
 output2.txt
-code_tracer/code_tracer/__pycache__/settings.cpython-311.pyc
 *.pyc
-code_tracer/code_tracer/__pycache__/settings.cpython-311.pyc
-code_tracer/code_tracer/__pycache__/settings.cpython-311.pyc
-code_tracer/code_tracer/settings.py
+tree.txt
+code_tracer/.env
