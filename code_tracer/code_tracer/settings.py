@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'code_tracer.store_source_code',
     'code_tracer.code_partitioner',
-    'code_tracer.users'
+    'code_tracer.users',
+    'code_tracer.ui'
 ]
 
 MIDDLEWARE = [
