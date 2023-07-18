@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'code_tracer.storesourcecode',
+    'code_tracer.store_source_code',
+    'code_tracer.code_partitioner',
 ]
 
 MIDDLEWARE = [
