@@ -16,13 +16,18 @@ class FilePartitioner:
 
 
 	def parse_java_file(self):
-		input_stream = FileStream(self.file_path)
-		lexer = JavaLexer(input_stream)
-		token_stream = CommonTokenStream(lexer)
-		parser = JavaParser(token_stream)
-		tree = parser.compilationUnit()
+		java_file = None
+		
+		try:
+			input_stream = FileStream(self.file_path)
+			lexer = JavaLexer(input_stream)
+			token_stream = CommonTokenStream(lexer)
+			parser = JavaParser(token_stream)
+			tree = parser.compilationUnit()
 
-		visitor = PartitionerJavaVisitor(self.file_name)
-		java_file = visitor.visit(tree)
+			visitor = PartitionerJavaVisitor(self.file_name)
+			java_file = visitor.visit(tree)
+		except Exception as e:
+			print(f"Error received: {e}")
 
 		return java_file

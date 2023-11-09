@@ -3,6 +3,9 @@ from file_scanner import FileScanner
 from source_file import *
 from file_partitioner import FilePartitioner
 import java_parser_listener
+# code_partitioner script
+from code_tracer.store_source_files.models import LanguageModel, ProjectModel, SourceFileModel, SourceClassModel, FileClass, SourceMethodModel, ClassMethod, SourceFieldModel, ClassField, SourceParameterModel, MethodParameter
+
 
 if __name__ == "__main__":
 
@@ -16,13 +19,10 @@ if __name__ == "__main__":
 	scanner = FileScanner(target_path)
 	scanner.scan()
 
+	print(f"Scanning {len(scanner.files)} files.")
+
 	for file in scanner.files:
-		# print(str(file))
+		print(str(file))
 		fp = FilePartitioner(file)
 		java_file_x = fp.parse()
-		print(str(java_file_x))
-
-	# TODO: Change path to output
-	# for seg in segments:
-		# TODO: Generate each segment to an executable file with same file type as source files
-		# TODO LATER: Set up a module that organizes segments into entities in a database
+		# print(str(java_file_x))

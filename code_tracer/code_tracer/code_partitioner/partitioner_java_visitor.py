@@ -27,9 +27,11 @@ class PartitionerJavaVisitor(JavaVisitor):
             parameters = []
         
         # Check for None before calling getText()
+        identity = ctx.Identifier().getText() if ctx.Identifier() else "void"
         type_spec = ctx.typeSpec().getText() if ctx.typeSpec() else "void"
+        method_body = ctx.methodBody().getText() if ctx.methodBody() else "void"
         
-        return JavaMethod(ctx.Identifier().getText(), type_spec, parameters, ctx.methodBody().getText())
+        return JavaMethod(identity, type_spec, parameters, method_body)
 
     def visitFieldDeclaration(self, ctx:JavaParser.FieldDeclarationContext):
         return JavaField(ctx.variableDeclarators().variableDeclarator(0).variableDeclaratorId().getText(), ctx.typeSpec().getText())
